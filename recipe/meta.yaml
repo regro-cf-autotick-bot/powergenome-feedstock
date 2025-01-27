@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PowerGenome-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/PowerGenome-{{ version }}.tar.gz
   sha256: 304fc637c860fb0a9ca4dd34f72169aa6d18a60d3f1e5d6fa63c0e9e85730f04
 
 build:
@@ -14,16 +14,16 @@ build:
     - run_powergenome_multiple = powergenome.run_powergenome_multiple_outputs_cli:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - setuptools >=66,<68
     - wheel
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - catalystcoop.pudl >=0.6.0,<=2022.11.30
     - beautifulsoup4 >=4.8.13
     - statsmodels >=0.12.2
@@ -43,6 +43,7 @@ test:
     - run_powergenome_multiple --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/PowerGenome/PowerGenome
